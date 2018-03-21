@@ -1,0 +1,29 @@
+<!--index.wxml-->
+<movable-area class="movable-area">
+  <movable-view class="movable-view"></movable-view>
+</movable-area>
+<swiper class="swiper1" indicator-dots indicator-color="#f00" indicator-active-color="#0f0" duration="500" circular vertical display-multiple-items="2" bindanimationfinish="doSwiperFinish" bindchange="doSwiperChange">
+  <swiper-item>
+    <image class="swiper2" src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg"/>
+  </swiper-item>
+  <swiper-item>
+    <image class="swiper3" src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg"/>
+  </swiper-item>
+</swiper>
+<scroll-view class="scroll-view2" scroll-top="{{ scrollView1 || null }}" bindscroll="doScrollViewScroll" scroll-into-view="scrollViewId1" scroll-with-animation scroll-y>
+  <view>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit repellat tempore dignissimos, laborum expedita error! Ab explicabo, possimus voluptate vero consectetur doloribus, asperiores quae sed velit quod laborum autem amet.</view>
+  <view>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit repellat tempore dignissimos, laborum expedita error! Ab explicabo, possimus voluptate vero consectetur doloribus, asperiores quae sed velit quod laborum autem amet.</view>
+  <view>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit repellat tempore dignissimos, laborum expedita error! Ab explicabo, possimus voluptate vero consectetur doloribus, asperiores quae sed velit quod laborum autem amet.</view>
+  <text id="scrollViewId1">ViYaYaYa</text>
+</scroll-view>
+<scroll-view class="scroll-view1" scroll-top="100" scroll-y upper-threshold="100" bindscrolltoupper="doScrollViewUpper">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores deserunt impedit velit ullam magni magnam provident incidunt quo! Consectetur qui doloremque magni obcaecati accusantium blanditiis ipsa reiciendis. Aliquid, quasi voluptates?</scroll-view>
+<view hover-class="view1" hover-start-time="1000">hover-class</view>
+<view class="view2" hover-class="view3">
+  <view class="view4" hover-class="view5" hover-stop-propagation hover-stay-time="2000">stop-propagation</view>
+</view>
