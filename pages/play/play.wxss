@@ -1,14 +1,12 @@
-.m_play {
-}
-
 .m_core {
   position: relative;
   overflow: hidden;
   background: #ccc;
+  overflow: auto;
 }
 
 .m_core_canvas {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
