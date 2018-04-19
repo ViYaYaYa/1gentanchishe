@@ -1,8 +1,7 @@
 {
   "pages":[
-    "pages/components/components",
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/play/play",
+    "pages/index/index"
   ],
   "window":{
     "backgroundTextStyle":"light",

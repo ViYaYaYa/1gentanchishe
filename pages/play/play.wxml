@@ -1,0 +1,6 @@
+<view class="m_play">
+  <view class="m_core" style="height: 320px;">
+    <canvas class="m_core_canvas" canvas-id="canvas"></canvas>
+  </view>
+  <view class="m_control">hello world</view>
+</view>

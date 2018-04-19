@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.9.93",
 	"appid": "wx61ca5d357ab8287c",
-	"projectname": "xiaochengxu",
+	"projectname": "snake",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
