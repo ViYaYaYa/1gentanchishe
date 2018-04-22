@@ -1,76 +1,95 @@
-const CANVAS_WIDTH = 320
-const CANVAS_HEIGHT = 320
+const CANVAS_ID = 'canvas'
 
-const ORIGIN_X = CANVAS_WIDTH / 2
-const ORIGIN_Y = CANVAS_HEIGHT / 2
+const CANVAS_WIDTH = 320 // 必须能被2整除
+const CANVAS_HEIGHT = 320 // 必须能被2整除
 
-const INITIAL_WIDTH = 20
-const INITIAL_SPEED = 1000
+const INITIAL_WIDTH = 20 // 初始蛇块的长宽
+const INITIAL_SPEED = 1000 // 初始速度，越小越快，原则上16.667是极限值（60帧）
+
+const ORIGIN_X = CANVAS_WIDTH / 2 // 原点坐标x（不能修改）
+const ORIGIN_Y = CANVAS_HEIGHT / 2 // 原点坐标y（不能修改）
+
+class Game {
+  constructor (id) {
+    this.ctx = wx.createCanvasContext(id)
+    this.snake = new Snake()
+    this.fat = INITIAL_WIDTH
+    this.speed = INITIAL_SPEED
+    this.status = 'READY'
+    this.timer = null
+    this.snake.grow()
+    this.snake.grow()
+    this.snake.grow()
+  }
+  setDirection () {
+
+  }
+  getBounus () {
+    this.snake.grow()
+    if (this.snake.getLength() % 3 === 0) {
+      this.fat += 1
+      this.speed += 10
+    }
+  }
+  start () {
+    this.status = 'START'
+    this.run()
+  }
+  run () {
+
+  }
+}
 
 class Snake {
-  constructor () {
-    this.head = new Muscle()
-    this.lv = 1
-    this.direction = 3 // 1上，2右，3下，4左
-  }
-  move () {
-    let { offsetX, offsetY } = this.getSnakeOffset()
-    let prevX = this.head.x
-    let prevY = this.head.y
-    this.head.x += offsetX
-    this.head.y += offsetY
-    let target = this.head.next
-    let nextX, nextY
-    while (target) {
-      nextX = target.x
-      nextY = target.y
-      target.x = prevX
-      target.y = prevY
-      prevX = nextX
-      prevY = nextY
-      target = target.next
-    }
-    snakeDraw()
-    setTimeout(this.move.bind(this), INITIAL_SPEED / this.lv)
+  constructor (x, y) {
+    this.head = new Muscle(x, y)
+    this.direction = 2 // 1上，2右，3下，4左
   }
   grow () {
-    let { offsetX, offsetY } = this.getSnakeOffset()
-    this.head = new Muscle(this.head.x + offsetX, this.head.y + offsetY, this.head)
+    let { x, y } = this.getNextOffset()
+    this.head = new Muscle(x, y, this.head)
+  }
+  move () {
+    let { x, y } = this.getNextOffset()
+    let nextX, nextY, cacheX, cacheY
+    nextX = this.head.x + x
+    nextY = this.head.y + y
+    this.each(function (muscle) {
+      cacheX = muscle.x
+      cacheY = muscle.y
+      muscle.x = nextX
+      muscle.y = nextY
+      nextX = cacheX
+      nextY = cacheY
+    })
   }
   each (callback) {
     let target = this.head
     while (target) {
-      callback(target)
+      callback.call(this, target)
       target = target.next
     }
   }
-  getHowFat () {
-    let target = this.lv - 1
-    while (ORIGIN_X % (INITIAL_WIDTH - target) !== 0) {
-      target++
-    }
-    return INITIAL_WIDTH - target
+  getLength () {
+    let length = 0
+    this.each(function () {
+      length++
+    })
+    return length
   }
-  getSnakeOffset () {
-    let offsetX, offsetY, direction
-    direction = +this.direction || 1
-    if (direction === 1) {
-      offsetX = 0
-      offsetY = -1
+  getNextOffset () {
+    if (this.direction === 1) {
+      return { x: 0, y: -1 }
     }
-    if (direction === 2) {
-      offsetX = 1
-      offsetY = 0
+    if (this.direction === 2) {
+      return  {x: 1, y: 0 }
     }
-    if (direction === 3) {
-      offsetX = 0
-      offsetY = 1
+    if (this.direction === 3) {
+      return  {x: 0, y: 1 }
     }
-    if (direction === 4) {
-      offsetX = -1
-      offsetY = 0
+    if (this.direction === 4) {
+      return { x: -1, y: 0 }
     }
-    return { offsetX, offsetY }
   }
 }
 
@@ -82,46 +101,22 @@ class Muscle {
   }
 }
 
-let ctx = null
-let snake = null
-let drawTasks = 0
-
-function snakeDraw () {
-  drawTasks++
-  setTimeout(function () {
-    drawTasks--
-    if (drawTasks <= 0) {
-      drawTasks = 0
-      ctx.translate(ORIGIN_X, ORIGIN_Y)
-      let fat = snake.getHowFat()
-      snake.each(function (muscle) {
-        ctx.fillRect(muscle.x * fat, muscle.y * fat, fat, fat)
-      })
-      ctx.draw()
-    }
-  }, 0)
-}
+let game = null
 
 // do for Action
 // Thank you!
 
 Page({
   data: {
+    CANVAS_ID,
     CANVAS_WIDTH,
     CANVAS_HEIGHT
   },
   doChangeDirection (ev) {
-    let dir = ev.target.dataset.direction
-    if (snake) {
-      snake.direction = dir
-    }
+    game.setDirection(+ev.target.dataset.direction)
   },
   onLoad () {
-    ctx = wx.createCanvasContext('canvas')
-    snake = new Snake()
-    snake.grow()
-    snake.grow()
-    snake.grow()
-    snake.move()
+    game = new Game(CANVAS_ID)
+    game.start()
   }
 })
