@@ -1,19 +1,68 @@
+.m_play {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .m_core {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 70%;
+  width: 100%;
   overflow: hidden;
   background: #ccc;
-  overflow: auto;
 }
 
 .m_core_canvas {
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: #999;
+  border: 1px solid red;
 }
 
 .m_control {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  overflow: hidden;
+}
+
+.m_control .up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 33.333%;
+  width: 100%;
+}
+
+.m_control .down {
+  position: absolute;
+  top: 66.666%;
+  left: 0;
+  height: 33.333%;
+  width: 100%;
+}
+
+.m_control .left {
+  position: absolute;
+  top: 33.333%;
+  left: 0;
+  height: 33.333%;
+  width: 50%;
+}
+
+.m_control .right {
+  position: absolute;
+  top: 33.333%;
+  right: 0;
+  height: 33.333%;
+  width: 50%;
 }

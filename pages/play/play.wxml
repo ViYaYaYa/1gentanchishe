@@ -1,11 +1,11 @@
 <view class="m_play">
   <view class="m_core">
-    <canvas class="m_core_canvas" canvas-id="canvas" style="width: 320px; height: 320px;"></canvas>
+    <canvas class="m_core_canvas" canvas-id="{{CANVAS_ID}}" style="width: {{CANVAS_WIDTH}}px; height: {{CANVAS_HEIGHT}}px;"></canvas>
   </view>
   <view class="m_control">
-    <button bindtap="doChangeDirection" data-direction="1">上</button>
-    <button bindtap="doChangeDirection" data-direction="2">右</button>
-    <button bindtap="doChangeDirection" data-direction="3">下</button>
-    <button bindtap="doChangeDirection" data-direction="4">左</button>
+    <button class="up" bindtap="doChangeDirection" data-direction="1">上</button>
+    <button class="right" bindtap="doChangeDirection" data-direction="2">右</button>
+    <button class="down" bindtap="doChangeDirection" data-direction="3">下</button>
+    <button class="left" bindtap="doChangeDirection" data-direction="4">左</button>
   </view>
 </view>
