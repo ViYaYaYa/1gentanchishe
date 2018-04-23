@@ -39,9 +39,13 @@ class Game {
       let originY = y
       while (table[x] && table[x].indexOf(y) !== -1) {
         while (table[x].indexOf(y !== -1)) {
-          if (++y === originY) break
+          y++
+          if (y >= maxY) y = -maxY
+          if (y === originY) break
         }
-        if (++x === originX) break
+        x++
+        if (x >= maxX ) x = -maxX
+        if (x === originX) break
       }
       if (originX === x && originY === y) {
         // 所有空间都被画满了
@@ -56,18 +60,19 @@ class Game {
     }
     this.draw()
   }
-  getBounus () {
+  getBonus () {
     this.snake.grow()
     let length = this.snake.getLength()
-    if (length % 5 === 0) {
+    if (length % 8 === 0) {
       this.fat -= 1
       while ((ORIGIN_X % this.fat) || (ORIGIN_Y % this.fat)) this.fat--
       if (this.fat < 1) this.fat = 1
     }
     if (length % 2 === 0) {
-      this.speed *= 0.7
+      this.speed *= 0.8
       if (this.speed < 16.6667) this.speed = 16.6667
     }
+    wx.setStorageSync('score', length)
     this.setBonus()
     this.draw()
   }
@@ -91,7 +96,7 @@ class Game {
     let { x, y } = this.snake.getNextDimension()
     let actualX = this.fat * x
     let actualY = this.fat * y
-    if (actualX > ORIGIN_X || actualX < -ORIGIN_X) {
+    if (actualX >= ORIGIN_X || actualX < -ORIGIN_X) {
       // 水平撞墙，带！
       this.boom()
     } else if (actualY >= ORIGIN_Y || actualY < -ORIGIN_Y) {
@@ -102,7 +107,7 @@ class Game {
     } else {
       if (x === this.bonusX && y === this.bonusY) {
         // 吃糖就脖子变长
-        this.getBounus()
+        this.getBonus()
       } else {
         // 没吃糖就往前走一步
         this.snake.move()
@@ -116,6 +121,11 @@ class Game {
     this.moveTimer = null
     this.status = 'DIED'
     wx.showToast({ title: '你带了！' })
+    setTimeout(function () {
+      wx.redirectTo({
+        url: '/pages/over/over'
+      })
+    }, 1500)
   }
   draw () {
     let t = this

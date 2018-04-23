@@ -1,0 +1,4 @@
+<view>
+  <view>你的分数是：{{ score }}</view>
+  <button bindtap="doOnceAgain">重新来一遍，蟹蟹！</button>
+</view>
